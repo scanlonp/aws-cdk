@@ -177,7 +177,5 @@
       "monocdk/yaml/**"
     ]
   },
-  "dependencies": {
-    "string-width": "^4.2.3"
-  }
+  "dependencies": {}
 }
