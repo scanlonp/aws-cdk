@@ -10,6 +10,7 @@ interface ResourceProperties {
   DelegatedZoneName: string,
   DelegatedZoneNameServers: string[],
   TTL: number,
+  Region: string;
   UseRegionalStsEndpoint?: string,
 }
 
@@ -26,7 +27,7 @@ export async function handler(event: AWSLambda.CloudFormationCustomResourceEvent
 }
 
 async function cfnEventHandler(props: ResourceProperties, isDeleteEvent: boolean) {
-  const { AssumeRoleArn, ParentZoneId, ParentZoneName, DelegatedZoneName, DelegatedZoneNameServers, TTL, UseRegionalStsEndpoint } = props;
+  const { AssumeRoleArn, ParentZoneId, ParentZoneName, DelegatedZoneName, DelegatedZoneNameServers, TTL, Region, UseRegionalStsEndpoint } = props;
 
   if (!ParentZoneId && !ParentZoneName) {
     throw Error('One of ParentZoneId or ParentZoneName must be specified');
@@ -35,7 +36,7 @@ async function cfnEventHandler(props: ResourceProperties, isDeleteEvent: boolean
   const timestamp = (new Date()).getTime();
   const route53 = new Route53({
     credentials: fromTemporaryCredentials({
-      clientConfig: { useGlobalEndpoint: !UseRegionalStsEndpoint },
+      clientConfig: { useGlobalEndpoint: !UseRegionalStsEndpoint, region: Region },
       params: {
         RoleArn: AssumeRoleArn,
         RoleSessionName: `cross-account-zone-delegation-${timestamp}`,

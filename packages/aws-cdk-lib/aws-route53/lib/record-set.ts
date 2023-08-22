@@ -5,7 +5,7 @@ import { IHostedZone } from './hosted-zone-ref';
 import { CfnRecordSet } from './route53.generated';
 import { determineFullyQualifiedDomainName } from './util';
 import * as iam from '../../aws-iam';
-import { CustomResource, CustomResourceProvider, CustomResourceProviderRuntime, Duration, IResource, RemovalPolicy, Resource, Token } from '../../core';
+import { CustomResource, CustomResourceProvider, CustomResourceProviderRuntime, Duration, IResource, RemovalPolicy, Resource, Stack, Token } from '../../core';
 
 const CROSS_ACCOUNT_ZONE_DELEGATION_RESOURCE_TYPE = 'Custom::CrossAccountZoneDelegation';
 const DELETE_EXISTING_RECORD_SET_RESOURCE_TYPE = 'Custom::DeleteExistingRecordSet';
@@ -750,6 +750,13 @@ export interface CrossAccountZoneDelegationRecordProps {
    * @default RemovalPolicy.DESTROY
    */
   readonly removalPolicy?: RemovalPolicy;
+
+  /**
+   * The region to make the assume role call in
+   *
+   * @default - region the stack is deployed in
+   */
+  readonly region?: string;
 }
 
 /**
@@ -794,6 +801,7 @@ export class CrossAccountZoneDelegationRecord extends Construct {
         DelegatedZoneNameServers: props.delegatedZone.hostedZoneNameServers!,
         TTL: (props.ttl || Duration.days(2)).toSeconds(),
         UseRegionalStsEndpoint: useRegionalStsEndpoint ? 'true' : undefined,
+        Region: props.region || Stack.of(this).region,
       },
     });
 
