@@ -288,7 +288,7 @@ const source = testCase.assertions.awsApiCall('CodePipeline', 'GetPipeline', {
 // the numbers index arryas in the json response object
 source.assertAtPath('pipeline.stages.0.actions.0.name', integ.ExpectedResult.stringLikeRegexp(expectedString));
 ```
-A helpful trick is to deploy the integ test with `--no-clean` and then make the api call locally. We can then trace the path to specific values easily. For example, `> aws codepipeline get-pipeline --name MyFirstPipeline`.
+A helpful trick is to deploy the integ test with `--no-clean` and then make the api call locally. We can then trace the path to specific values easily. For example, `> aws codepipeline get-pipeline --name MyFirstPipeline`. Additionally, if you are getting an error such as "undefined is not the same as "\the string you are asserting", you can check CloudWatch logs.
 
 Adding assertions is prefered on all new integ tests; however, it is not strictly required. We typically do not need to assert CloudFormation behavior. For example, if we create an S3 Bucket
 with Encryption, we do not need to assert that Encryption is set on the bucket. We can trust that the CloudFormation behavior works.
