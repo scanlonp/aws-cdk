@@ -24,14 +24,9 @@ class MyRequestHandler(SimpleHTTPRequestHandler):
                   raise Exception(f"Received a non-successful status code: {status_code}")
                 # self.wfile.write(bytes(f"Status code from ipv6.google.com: {status_code}\n\n", 'utf-8'))
             
-                json_response = {
-                          "status": 200,
-                          "body": "OK",
-                          "Data": {
-                              "OK": "OK",
-                              "status": 200,
-                          }
-                      }
+                json_response = { 
+                    "status": status_code
+                    }
                 
                 self.wfile.write(json.dumps(json_response).encode('utf-8'))
             except Exception as e:
@@ -42,6 +37,6 @@ class MyRequestHandler(SimpleHTTPRequestHandler):
 
 if __name__ == '__main__':
     from http.server import HTTPServer
-    server = HTTPServer(('localhost', 8000), MyRequestHandler)
-    print('Server started on http://localhost:8000')
+    server = HTTPServer(('0.0.0.0', 8000), MyRequestHandler)
+    print('Server started on http://0.0.0.0:8000')
     server.serve_forever()

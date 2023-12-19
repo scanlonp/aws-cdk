@@ -1194,8 +1194,8 @@
                           {
                             "cidrIp": "0.0.0.0/0",
                             "ipProtocol": "tcp",
-                            "fromPort": 80,
-                            "toPort": 80,
+                            "fromPort": 8000,
+                            "toPort": 8000,
                             "description": "HTTP traffic"
                           },
                           {
@@ -1430,7 +1430,7 @@
                         "Fn::Join": [
                           "",
                           [
-                            "#!/bin/bash\n# fingerprint: 30c05cd287172878\n(\n  set +e\n  /opt/aws/bin/cfn-init -v --region ",
+                            "#!/bin/bash\n# fingerprint: 5a6d993d6ae41f93\n(\n  set +e\n  /opt/aws/bin/cfn-init -v --region ",
                             {
                               "Ref": "AWS::Region"
                             },
@@ -1506,6 +1506,24 @@
               "version": "0.0.0"
             }
           },
+          "Exports": {
+            "id": "Exports",
+            "path": "vpc-dual-stack-ec2/Exports",
+            "children": {
+              "Output{\"Fn::GetAtt\":[\"MyInstanceA12EC128\",\"PublicIp\"]}": {
+                "id": "Output{\"Fn::GetAtt\":[\"MyInstanceA12EC128\",\"PublicIp\"]}",
+                "path": "vpc-dual-stack-ec2/Exports/Output{\"Fn::GetAtt\":[\"MyInstanceA12EC128\",\"PublicIp\"]}",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CfnOutput",
+                  "version": "0.0.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "constructs.Construct",
+              "version": "10.3.0"
+            }
+          },
           "BootstrapVersion": {
             "id": "BootstrapVersion",
             "path": "vpc-dual-stack-ec2/BootstrapVersion",
@@ -1548,6 +1566,94 @@
                 "id": "DeployAssert",
                 "path": "vpc-dual-stack-ec2-test/DefaultTest/DeployAssert",
                 "children": {
+                  "HttpApiCall4a6aba59f387265cc68ff7ed40f2e1a0": {
+                    "id": "HttpApiCall4a6aba59f387265cc68ff7ed40f2e1a0",
+                    "path": "vpc-dual-stack-ec2-test/DefaultTest/DeployAssert/HttpApiCall4a6aba59f387265cc68ff7ed40f2e1a0",
+                    "children": {
+                      "HttpProvider": {
+                        "id": "HttpProvider",
+                        "path": "vpc-dual-stack-ec2-test/DefaultTest/DeployAssert/HttpApiCall4a6aba59f387265cc68ff7ed40f2e1a0/HttpProvider",
+                        "children": {
+                          "AssertionsProvider": {
+                            "id": "AssertionsProvider",
+                            "path": "vpc-dual-stack-ec2-test/DefaultTest/DeployAssert/HttpApiCall4a6aba59f387265cc68ff7ed40f2e1a0/HttpProvider/AssertionsProvider",
+                            "constructInfo": {
+                              "fqn": "constructs.Construct",
+                              "version": "10.3.0"
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "@aws-cdk/integ-tests-alpha.AssertionsProvider",
+                          "version": "0.0.0"
+                        }
+                      },
+                      "Default": {
+                        "id": "Default",
+                        "path": "vpc-dual-stack-ec2-test/DefaultTest/DeployAssert/HttpApiCall4a6aba59f387265cc68ff7ed40f2e1a0/Default",
+                        "children": {
+                          "Default": {
+                            "id": "Default",
+                            "path": "vpc-dual-stack-ec2-test/DefaultTest/DeployAssert/HttpApiCall4a6aba59f387265cc68ff7ed40f2e1a0/Default/Default",
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.CfnResource",
+                              "version": "0.0.0"
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.CustomResource",
+                          "version": "0.0.0"
+                        }
+                      },
+                      "AssertionResults": {
+                        "id": "AssertionResults",
+                        "path": "vpc-dual-stack-ec2-test/DefaultTest/DeployAssert/HttpApiCall4a6aba59f387265cc68ff7ed40f2e1a0/AssertionResults",
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.CfnOutput",
+                          "version": "0.0.0"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "@aws-cdk/integ-tests-alpha.HttpApiCall",
+                      "version": "0.0.0"
+                    }
+                  },
+                  "SingletonFunction1488541a7b23466481b69b4408076b81": {
+                    "id": "SingletonFunction1488541a7b23466481b69b4408076b81",
+                    "path": "vpc-dual-stack-ec2-test/DefaultTest/DeployAssert/SingletonFunction1488541a7b23466481b69b4408076b81",
+                    "children": {
+                      "Staging": {
+                        "id": "Staging",
+                        "path": "vpc-dual-stack-ec2-test/DefaultTest/DeployAssert/SingletonFunction1488541a7b23466481b69b4408076b81/Staging",
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.AssetStaging",
+                          "version": "0.0.0"
+                        }
+                      },
+                      "Role": {
+                        "id": "Role",
+                        "path": "vpc-dual-stack-ec2-test/DefaultTest/DeployAssert/SingletonFunction1488541a7b23466481b69b4408076b81/Role",
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.CfnResource",
+                          "version": "0.0.0"
+                        }
+                      },
+                      "Handler": {
+                        "id": "Handler",
+                        "path": "vpc-dual-stack-ec2-test/DefaultTest/DeployAssert/SingletonFunction1488541a7b23466481b69b4408076b81/Handler",
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.CfnResource",
+                          "version": "0.0.0"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "constructs.Construct",
+                      "version": "10.3.0"
+                    }
+                  },
                   "BootstrapVersion": {
                     "id": "BootstrapVersion",
                     "path": "vpc-dual-stack-ec2-test/DefaultTest/DeployAssert/BootstrapVersion",

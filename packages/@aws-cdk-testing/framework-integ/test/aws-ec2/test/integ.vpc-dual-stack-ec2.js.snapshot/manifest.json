@@ -18,7 +18,7 @@
         "validateOnSynth": false,
         "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-deploy-role-${AWS::AccountId}-${AWS::Region}",
         "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-cfn-exec-role-${AWS::AccountId}-${AWS::Region}",
-        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/7a2f24477f792104bdcb14a2b588d63039789b0d1546def6ac35903f8e5edd6f.json",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/6b71749470ef0f8ce823050bdc918a95b0ea5daed2f33109b952a6a7bfecc5dc.json",
         "requiresBootstrapStackVersion": 6,
         "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
         "additionalDependencies": [
@@ -283,16 +283,19 @@
         "/vpc-dual-stack-ec2/MyInstance/Resource": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "MyInstanceA12EC128",
-            "trace": [
-              "!!DESTRUCTIVE_CHANGES: MAY_REPLACE"
-            ]
+            "data": "MyInstanceA12EC128"
           }
         ],
         "/vpc-dual-stack-ec2/SsmParameterValue:--aws--service--ami-amazon-linux-latest--amzn2-ami-kernel-5.10-hvm-x86_64-gp2:C96584B6-F00A-464E-AD19-53AFF4B05118.Parameter": [
           {
             "type": "aws:cdk:logicalId",
             "data": "SsmParameterValueawsserviceamiamazonlinuxlatestamzn2amikernel510hvmx8664gp2C96584B6F00A464EAD1953AFF4B05118Parameter"
+          }
+        ],
+        "/vpc-dual-stack-ec2/Exports/Output{\"Fn::GetAtt\":[\"MyInstanceA12EC128\",\"PublicIp\"]}": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ExportsOutputFnGetAttMyInstanceA12EC128PublicIp4458147B"
           }
         ],
         "/vpc-dual-stack-ec2/BootstrapVersion": [
@@ -327,7 +330,7 @@
         "validateOnSynth": false,
         "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-deploy-role-${AWS::AccountId}-${AWS::Region}",
         "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-cfn-exec-role-${AWS::AccountId}-${AWS::Region}",
-        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/21fbb51d7b23f6a6c262b46a9caee79d744a3ac019fd45422d988b96d44b2a22.json",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/88885cc12844f96d47364e9bc4834ad36f76c5801ebc8bf3cdfa18db03aa13a4.json",
         "requiresBootstrapStackVersion": 6,
         "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
         "additionalDependencies": [
@@ -340,9 +343,34 @@
         }
       },
       "dependencies": [
+        "vpc-dual-stack-ec2",
         "vpcdualstackec2testDefaultTestDeployAssertB4C8CEE8.assets"
       ],
       "metadata": {
+        "/vpc-dual-stack-ec2-test/DefaultTest/DeployAssert/HttpApiCall4a6aba59f387265cc68ff7ed40f2e1a0/Default/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "HttpApiCall4a6aba59f387265cc68ff7ed40f2e1a0"
+          }
+        ],
+        "/vpc-dual-stack-ec2-test/DefaultTest/DeployAssert/HttpApiCall4a6aba59f387265cc68ff7ed40f2e1a0/AssertionResults": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AssertionResultsHttpApiCall4a6aba59f387265cc68ff7ed40f2e1a0"
+          }
+        ],
+        "/vpc-dual-stack-ec2-test/DefaultTest/DeployAssert/SingletonFunction1488541a7b23466481b69b4408076b81/Role": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SingletonFunction1488541a7b23466481b69b4408076b81Role37ABCE73"
+          }
+        ],
+        "/vpc-dual-stack-ec2-test/DefaultTest/DeployAssert/SingletonFunction1488541a7b23466481b69b4408076b81/Handler": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SingletonFunction1488541a7b23466481b69b4408076b81HandlerCD40AE9F"
+          }
+        ],
         "/vpc-dual-stack-ec2-test/DefaultTest/DeployAssert/BootstrapVersion": [
           {
             "type": "aws:cdk:logicalId",

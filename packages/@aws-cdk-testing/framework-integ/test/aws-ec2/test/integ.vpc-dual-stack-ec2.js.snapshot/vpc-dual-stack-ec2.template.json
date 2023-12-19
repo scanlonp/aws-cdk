@@ -891,9 +891,9 @@
      {
       "CidrIp": "0.0.0.0/0",
       "Description": "HTTP traffic",
-      "FromPort": 80,
+      "FromPort": 8000,
       "IpProtocol": "tcp",
-      "ToPort": 80
+      "ToPort": 8000
      },
      {
       "CidrIp": "0.0.0.0/0",
@@ -1061,7 +1061,7 @@
       "Fn::Join": [
        "",
        [
-        "#!/bin/bash\n# fingerprint: 30c05cd287172878\n(\n  set +e\n  /opt/aws/bin/cfn-init -v --region ",
+        "#!/bin/bash\n# fingerprint: 5a6d993d6ae41f93\n(\n  set +e\n  /opt/aws/bin/cfn-init -v --region ",
         {
          "Ref": "AWS::Region"
         },
@@ -1104,7 +1104,7 @@
       "files": {
        "/app/webserver.zip": {
         "source": {
-         "Fn::Sub": "https://s3.${AWS::Region}.${AWS::URLSuffix}/cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/95ed4fecda5f23bb923df9bad3b95f22174c9023f6141f667c3bd2f3e674e456.zip"
+         "Fn::Sub": "https://s3.${AWS::Region}.${AWS::URLSuffix}/cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/8fb0a89660d975b63ae9c1da2d98115f6b8d1a19c0148f131c05e807c5fab53c.zip"
         },
         "mode": "000644",
         "owner": "root",
@@ -1162,6 +1162,19 @@
    "Type": "AWS::SSM::Parameter::Value<String>",
    "Default": "/cdk-bootstrap/hnb659fds/version",
    "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]"
+  }
+ },
+ "Outputs": {
+  "ExportsOutputFnGetAttMyInstanceA12EC128PublicIp4458147B": {
+   "Value": {
+    "Fn::GetAtt": [
+     "MyInstanceA12EC128",
+     "PublicIp"
+    ]
+   },
+   "Export": {
+    "Name": "vpc-dual-stack-ec2:ExportsOutputFnGetAttMyInstanceA12EC128PublicIp4458147B"
+   }
   }
  },
  "Rules": {

@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import * as iam from 'aws-cdk-lib/aws-iam';
 import * as cdk from 'aws-cdk-lib';
-import { IntegTest } from '@aws-cdk/integ-tests-alpha';
+import { ExpectedResult, IntegTest } from '@aws-cdk/integ-tests-alpha';
 import * as ec2 from 'aws-cdk-lib/aws-ec2';
 import { Construct } from 'constructs';
 import * as path from 'path';
@@ -45,7 +45,6 @@ class EC2DualStack extends cdk.Stack {
             ec2.InitService.enable('webserver', {
               serviceManager: ec2.ServiceManager.SYSTEMD,
             }),
-            ec2.InitCommand.shellCommand('curl http://www.google.com && curl http://ipv6.google.com'),
           ]),
         },
       }),
@@ -54,7 +53,7 @@ class EC2DualStack extends cdk.Stack {
     this.instancePublicIp = instance.instancePublicIp;
 
     instance.connections.allowFromAnyIpv4(ec2.Port.tcp(22), 'Allow SSH access');
-    instance.connections.allowFromAnyIpv4(ec2.Port.tcp(80), 'HTTP traffic');
+    instance.connections.allowFromAnyIpv4(ec2.Port.tcp(8000), 'HTTP traffic');
     instance.connections.allowFromAnyIpv4(ec2.Port.icmpPing());
     instance.connections.allowFrom(ec2.Peer.anyIpv6(), ec2.Port.allIcmpV6(), 'allow ICMP6');
   }
@@ -62,13 +61,11 @@ class EC2DualStack extends cdk.Stack {
 
 const testCase = new EC2DualStack(app, 'vpc-dual-stack-ec2');
 
-new IntegTest(app, 'vpc-dual-stack-ec2-test', {
+const integ = new IntegTest(app, 'vpc-dual-stack-ec2-test', {
   testCases: [testCase],
 });
 
-// TODO: Fix 'Invalid Response object: Value of property Data must be an object' error
-// integ.assertions.httpApiCall(`http://${testCase.instancePublicIp}:8000`, {});
-// const ipv4ipv6Invoke = integ.assertions.httpApiCall(`http://${testCase.instancePublicIp}:8000`, {});
-// ipv4ipv6Invoke.expect(ExpectedResult.objectLike({
-//   status: 200,
-// }));
+const ipv4ipv6Invoke = integ.assertions.httpApiCall(`http://${testCase.instancePublicIp}:8000`, {});
+ipv4ipv6Invoke.expect(ExpectedResult.objectLike({
+  status: 200,
+}));
