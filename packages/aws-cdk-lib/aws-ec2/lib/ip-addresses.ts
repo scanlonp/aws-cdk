@@ -449,6 +449,8 @@ export class Ipv6Addresses {
 export interface IIpv6Addresses {
   /**
    * Internal function to get scope and context from VPC.
+   *
+   * @internal
    */
   _bind(context: _VpcContext): void;
 
