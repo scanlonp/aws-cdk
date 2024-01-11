@@ -140,6 +140,8 @@ export interface AllocateCidrRequest {
 
 /**
  * Internal interface to get VPC context to IpAddresses.
+ *
+ * @internal
  */
 export interface _VpcContext {
   /**
