@@ -1594,7 +1594,7 @@ export class Vpc extends VpcBase {
     if (this.useIpv6) {
       this.ipv6Addresses = props.ipv6Addresses ?? Ipv6Addresses.amazonProvided();
 
-      this.ipv6Addresses.bind({
+      this.ipv6Addresses._bind({
         scope: this,
         vpcId: this.vpcId,
       });

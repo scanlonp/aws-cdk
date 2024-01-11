@@ -448,7 +448,7 @@ export interface IIpv6Addresses {
   /**
    * Internal function to get scope and context from VPC.
    */
-  bind(context: _VpcContext): void;
+  _bind(context: _VpcContext): void;
 
   /**
    * Called by VPC to allocate IPv6 CIDR.
@@ -502,7 +502,7 @@ class AmazonProvided implements IIpv6Addresses {
    *
    * @internal
    */
-  bind(context: _VpcContext): void {
+  _bind(context: _VpcContext): void {
     this.scope = context.scope;
     this.vpcId = context.vpcId;
   }
