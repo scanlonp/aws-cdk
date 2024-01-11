@@ -139,18 +139,18 @@ export interface AllocateCidrRequest {
 }
 
 /**
- * Request for allocation of the VPC IPv6 CIDR.
+ * Internal interface to get VPC context to IpAddresses.
  */
-export interface AllocateVpcIpv6CidrRequest {
+export interface _VpcContext {
   /**
-   * The VPC construct to attach to.
+   * VPC construct.
    */
-  readonly scope: Construct;
+  scope: Construct;
 
   /**
-   * The id of the VPC.
+   * Id of the VPC.
    */
-  readonly vpcId: string;
+  vpcId: string;
 }
 
 /**
@@ -446,18 +446,16 @@ export class Ipv6Addresses {
  */
 export interface IIpv6Addresses {
   /**
-   * Whether the IPv6 CIDR is Amazon provided or not.
-   *
-   * Note this is specific to the IPv6 CIDR.
+   * Internal function to get scope and context from VPC.
    */
-  amazonProvided: boolean,
+  bind(context: _VpcContext): void;
 
   /**
    * Called by VPC to allocate IPv6 CIDR.
    *
    * Note this is specific to the IPv6 CIDR.
    */
-  allocateVpcIpv6Cidr(input: AllocateVpcIpv6CidrRequest): CfnVPCCidrBlock;
+  allocateVpcIpv6Cidr(): CfnVPCCidrBlock;
 
   /**
    * Split IPv6 CIDR block up for subnets.
@@ -483,11 +481,32 @@ class AmazonProvided implements IIpv6Addresses {
   /**
    * Whether the IPv6 CIDR is Amazon provided or not.
    */
-  amazonProvided: boolean;
+  private readonly amazonProvided: boolean;
+
+  /**
+   * Internal VPC construct.
+   */
+  private scope?: Construct;
+
+  /**
+   * Internal id of the VPC.
+   */
+  private vpcId?: string;
 
   constructor() {
     this.amazonProvided = true;
   }
+
+  /**
+   * Internal function to get scope and context from VPC.
+   *
+   * @internal
+   */
+  bind(context: _VpcContext): void {
+    this.scope = context.scope;
+    this.vpcId = context.vpcId;
+  }
+
   /**
    * Called by VPC to allocate IPv6 CIDR.
    *
@@ -495,10 +514,12 @@ class AmazonProvided implements IIpv6Addresses {
    *
    * Note this is specific to the IPv6 CIDR.
    */
-  allocateVpcIpv6Cidr(input: AllocateVpcIpv6CidrRequest): CfnVPCCidrBlock {
-    //throw new Error(`vpcId not found, got ${(scope as any).vpcId}`);
-    return new CfnVPCCidrBlock(input.scope, 'ipv6cidr', {
-      vpcId: input.vpcId,
+  allocateVpcIpv6Cidr(): CfnVPCCidrBlock {
+    if (this.scope === undefined || this.vpcId === undefined) {
+      throw new Error('Context is unset when trying to allocate VPC IPv6 CIDR block');
+    }
+    return new CfnVPCCidrBlock(this.scope, 'ipv6cidr', {
+      vpcId: this.vpcId,
       amazonProvidedIpv6CidrBlock: this.amazonProvided,
     });
   }

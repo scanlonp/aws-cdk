@@ -1594,10 +1594,12 @@ export class Vpc extends VpcBase {
     if (this.useIpv6) {
       this.ipv6Addresses = props.ipv6Addresses ?? Ipv6Addresses.amazonProvided();
 
-      this.ipv6CidrBlock = this.ipv6Addresses.allocateVpcIpv6Cidr({
+      this.ipv6Addresses.bind({
         scope: this,
         vpcId: this.vpcId,
       });
+
+      this.ipv6CidrBlock = this.ipv6Addresses.allocateVpcIpv6Cidr();
 
       this.ipv6SelectedCidr = Fn.select(0, this.resource.attrIpv6CidrBlocks);
     }
