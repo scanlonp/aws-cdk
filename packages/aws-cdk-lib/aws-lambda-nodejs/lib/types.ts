@@ -181,11 +181,13 @@ export interface BundlingOptions extends DockerRunOptions {
   readonly externalModules?: string[];
 
   /**
-   * Includes AWS SDK in the bundle asset.
+   * Includes AWS SDK in the bundled asset.
    *
-   * @default - false
-   * if `true` the `aws-sdk` will be included in the asset bundle and not be
-   * resolved to the Lambda provided sdk.
+   * If set, `@aws-sdk/*` will be included in the asset bundle and not be
+   * resolved to the Lambda provided SDK.
+   *
+   * @default - SDK will not be bundled. It will be resolved to the version included in the Lambda runtime.
+
    */
   readonly bundleAwsSDK?: boolean;
 
@@ -288,7 +290,10 @@ export interface BundlingOptions extends DockerRunOptions {
   readonly assetHash?: string;
 
   /**
-   * Output format for the generated JavaScript files
+   * Output format for the generated JavaScript files.
+   *
+   * If using `OutputFormat.ESM` and bundling the SDK,
+   * you may need to add `mainFields: ['module', 'main']` to the bundling options.
    *
    * @default OutputFormat.CJS
    */
